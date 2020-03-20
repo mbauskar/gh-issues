@@ -1,5 +1,7 @@
 *.pyc
+secret.json
 
 # directories
+notes/
 venv/
 __pycache__
