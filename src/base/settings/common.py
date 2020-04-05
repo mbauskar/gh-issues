@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'campaign',
+    'issues'
 ]
 
 MIDDLEWARE = [
@@ -136,9 +136,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-# print(PROJECT_PACKAGE, os.path.dirname(PROJECT_PACKAGE))
 STATICFILES_DIRS = (
     os.path.join(os.path.dirname(PROJECT_PACKAGE), "static"),
 )
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
+
+AUTH_USER_MODEL = 'issues.GitHubUser'
+
+# github username and password
+
+GH_USERNAME = SECRET.get('gh_username', 'gh_username')
+GH_PASSWORD = SECRET.get('gh_password', 'gh_password')
+
+GH_ACCESS_TOKEN = SECRET.get('gh_access_token', 'some-random-token')
+
