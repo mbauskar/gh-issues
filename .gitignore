@@ -1,0 +1,9 @@
+secret.json
+package-lock.json
+**/settings/prod.py
+
+# directories 
+venv/
+node_modules/
+__pycache__/
+**/static/build/

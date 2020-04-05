@@ -1,0 +1,59 @@
+{
+	"name": "gh_issues",
+	"version": "1.0.0",
+	"description": "gh_issues description",
+	"scripts": {
+		"prod": "webpack --config ./webpack.config.js",
+		"listen": "webpack --watch --progress --mode developement --config ./webpack.config.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/author/gh_issues.git"
+	},
+	"keywords": [],
+	"author": "author",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/author/gh_issues/issues"
+	},
+	"homepage": "https://github.com/author/gh_issues#readme",
+	"devDependencies": {
+		"@babel/cli": "^7.8.4",
+		"@babel/core": "^7.9.0",
+		"@babel/plugin-proposal-class-properties": "^7.8.3",
+		"@babel/plugin-transform-runtime": "^7.9.0",
+		"@babel/preset-env": "^7.9.0",
+		"@babel/preset-react": "^7.9.4",
+		"autoprefixer": "^9.7.5",
+		"babel-eslint": "^10.1.0",
+		"babel-jest": "^25.2.6",
+		"babel-loader": "^8.1.0",
+		"babel-plugin-transform-decorators-legacy": "^1.3.5",
+		"babel-preset-react": "^6.24.1",
+		"babel-runtime": "^6.26.0",
+		"babili-webpack-plugin": "^0.1.2",
+		"css-loader": "^3.4.2",
+		"extract-text-webpack-plugin": "^4.0.0-beta.0",
+		"file-loader": "^6.0.0",
+		"html-webpack-plugin": "^4.0.4",
+		"install": "^0.13.0",
+		"optimize-css-assets-webpack-plugin": "^5.0.3",
+		"postcss-loader": "^3.0.0",
+		"style-loader": "^1.1.3",
+		"uglifyjs-webpack-plugin": "^2.2.0",
+		"webpack": "^4.42.1",
+		"webpack-cli": "^3.3.11",
+		"webpack-dev-server": "^3.10.3"
+	},
+	"dependencies": {
+		"moment": "^2.24.0",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"react-redux": "^7.2.0",
+		"react-router": "^5.1.2",
+		"react-router-dom": "^5.1.2",
+		"reactstrap": "^8.4.1",
+		"redux": "^4.0.5",
+		"xmlhttprequest": "^1.8.0"
+	}
+}
