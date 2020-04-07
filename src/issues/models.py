@@ -54,6 +54,7 @@ class GithubBase(models.Model):
 	html_url = models.TextField(null=False)
 
 	labels = models.ManyToManyField(Label)
+	repo = models.ForeignKey(Repo, on_delete=models.CASCADE)
 
 	# dates to capture
 	opened_at = models.DateTimeField()
