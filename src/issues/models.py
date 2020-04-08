@@ -50,17 +50,18 @@ class Label(BaseModel):
 class GithubBase(models.Model):
 	number = models.IntegerField(null=False, unique=True)
 	title = models.TextField(null=False)
-	status = models.CharField(max_length=255, null=False)
+	state = models.CharField(max_length=255, null=False)
 	html_url = models.TextField(null=False)
 
 	labels = models.ManyToManyField(Label)
 	repo = models.ForeignKey(Repo, on_delete=models.CASCADE)
 
 	# dates to capture
-	opened_at = models.DateTimeField()
-	closed_at = models.DateTimeField()
-	created_at = models.DateTimeField()
-	updated_at = models.DateTimeField()
+	closed_at = models.DateTimeField(null=True)
+	gh_created_at = models.DateTimeField()
+	gh_updated_at = models.DateTimeField()
+	created_at = models.DateTimeField(auto_now_add=True, null=False)
+	updated_at = models.DateTimeField(auto_now=True, null=False)
 
 	class Meta:
 		abstract = True
@@ -76,9 +77,9 @@ class PullRequest(GithubBase):
 	class Meta:
 		indexes = [
 			models.Index(fields=['number']),
-			models.Index(fields=['status']),
+			models.Index(fields=['state']),
 			models.Index(fields=['author']),
-			models.Index(fields=['author', 'status']),
+			models.Index(fields=['author', 'state']),
 		]
 		db_table = 'PullRequest'
 
@@ -87,16 +88,16 @@ class Issue(GithubBase):
 	author = models.ForeignKey(GitHubUser, on_delete=models.CASCADE,
 		related_name='issue_author')
 	assigned_to = models.ForeignKey(GitHubUser, on_delete=models.CASCADE,
-		related_name='issue_assigned_to')
+		related_name='issue_assigned_to', null=True)
 	pull_requests = models.ManyToManyField(PullRequest)
 
 	class Meta:
 		indexes = [
 			models.Index(fields=['number']),
-			models.Index(fields=['status']),
+			models.Index(fields=['state']),
 			models.Index(fields=['author']),
 			models.Index(fields=['assigned_to']),
-			models.Index(fields=['author', 'status']),
+			models.Index(fields=['author', 'state']),
 		]
 		db_table = 'Issue'
 

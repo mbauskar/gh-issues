@@ -1,7 +1,7 @@
 from issues.models import GitHubUser
 from issues.utils.request import github_request
 
-def get_user(github_username=None):
+def fetch_user(github_username=None):
 	""" fetch user details from github abd store it in db  """
 	uri = 'user' if not github_username else f'users/{github_username}'
 	user_info = github_request(uri)
@@ -9,28 +9,38 @@ def get_user(github_username=None):
 	if not user_info:
 		return None
 
-	# check if user already exists
+	return get_or_create_user(user_info, is_superuser=True)
+
+
+def get_or_create_user(user_info, is_superuser=False, is_staff=True):
+	""" check if user is already exists, if not then create one """
+	user = None
+	if not user_info:
+		return user
+
 	github_username = user_info.get('login', None)
 	if not github_username:
 		return None
 
-
-	user = None
 	full_name = user_info.get('name', '')
 	first_name = full_name.split(' ')[0]
 	last_name = full_name.split(' ')[-1]
 	email = user_info.get('email', None)
 	if not email:
-		email = '{0}@example.com'.format(full_name.lower().replace(' ', ','))
+		email = '{0}@example.com'.format(full_name.lower().replace(' ', '.'))
 
 	to_udpate = {
 		"email": email,
 		"last_name": last_name,
 		"first_name": first_name,
 		"username": github_username,
-		"github_username": github_username
+		"github_username": github_username,
+
+		"is_staff": is_staff,
+		"is_superuser": is_superuser
 	}
 
+	# check if user already exists
 	user = GitHubUser.objects.filter(username=github_username,
 		github_username=github_username)
 

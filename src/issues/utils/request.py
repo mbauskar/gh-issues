@@ -5,7 +5,7 @@ def before_request():
 	""" add session_id in the request body """
 	payload = {}
 	headers = {
-		'Authorization': 'token cf9b58e75b77ea4bb6c0e1294b4317da54321f78'
+		'Authorization': 'token {0}'.format(settings.GH_ACCESS_TOKEN)
 	}
 	return payload, headers
 
@@ -25,7 +25,11 @@ def github_request(uri, method='GET', payload={},
 	url = f"{base_url}/{uri}"
 
 	try:
-		response = requests.request(method, url, headers=headers, data=payload)
+		args = {
+			"headers": headers,
+			"data" if method != "GET" else "params": payload
+		}
+		response = requests.request(method, url, **args)
 		if response.status_code == 200:
 			return response.json() or {}
 		else:

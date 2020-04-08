@@ -1,8 +1,8 @@
 from issues.management.commands import IssuesBaseCommand
 
-from issues.api.user import get_user
+from issues.api.user import fetch_user
 from issues.models import Organization
-from issues.api.organization import get_organizations
+from issues.api.organization import fetch_user_organizations
 
 class Command(IssuesBaseCommand):
 	help = 'Setup super user and organizations'
@@ -10,8 +10,8 @@ class Command(IssuesBaseCommand):
 
 	def handle(self, **options):
 		try:
-			user = get_user()
-			orgs = get_organizations()
+			user = fetch_user()
+			orgs = fetch_user_organizations()
 
 			for org in orgs:
 				already_exists = org.githubuser_set.filter(
