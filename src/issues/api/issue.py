@@ -25,7 +25,7 @@ def fetch_and_save_repo_issues(repo, last_updated):
 			'sort': 'updated',
 			'since': get_gh_formatted_date(last_updated)
 		})
-	print(filters, "last_updated")
+
 	issues = github_request(uri, payload=filters)
 	issue_numbers = [ issue.get('number', None) for issue in issues \
 		if issue.get('number', None) ]
@@ -33,7 +33,7 @@ def fetch_and_save_repo_issues(repo, last_updated):
 	available_issues = { issue.number: issue for issue in available_issues }
 
 	to_insert = []
-	print(len(issues))
+
 	for issue in issues:
 		is_pull = issue.get('pull_request', None)
 		print(issue.get('title', 'NA'), bool(is_pull))
