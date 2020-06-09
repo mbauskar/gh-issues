@@ -1,4 +1,5 @@
 secret.json
+gh-issue.sqlite3
 package-lock.json
 **/settings/prod.py
 

@@ -23,29 +23,37 @@ def get_or_create_user(user_info, is_superuser=False, is_staff=True):
 		return None
 
 	full_name = user_info.get('name', '')
-	first_name = full_name.split(' ')[0]
-	last_name = full_name.split(' ')[-1]
 	email = user_info.get('email', None)
 	if not email:
-		email = '{0}@example.com'.format(full_name.lower().replace(' ', '.'))
-
-	to_udpate = {
-		"email": email,
-		"last_name": last_name,
-		"first_name": first_name,
-		"username": github_username,
-		"github_username": github_username,
-
-		"is_staff": is_staff,
-		"is_superuser": is_superuser
-	}
+		email = '{0}@example.com'.format(full_name.lower().replace(' ', '.') \
+			if full_name else github_username)
 
 	# check if user already exists
 	user = GitHubUser.objects.filter(username=github_username,
 		github_username=github_username)
 
-	user = GitHubUser() if not user.exists() else user.first()
-	for key, val in to_udpate.items():
+	to_update = {
+		"email": email,
+		"username": github_username,
+		"github_username": github_username
+	}
+
+	if full_name:
+		to_update.update({
+			"first_name": full_name.split(' ')[0],
+			"last_name": full_name.split(' ')[-1],
+		})
+
+
+	if not user.exists():
+		user = GitHubUser()
+		to_update = {
+			"is_staff": is_staff,
+			"is_superuser": is_superuser
+		}
+	user = user.first()
+
+	for key, val in to_update.items():
 		setattr(user, key, val)
 
 	user.set_password(github_username)

@@ -9,7 +9,7 @@ class Command(IssuesBaseCommand):
 	def handle(self, **options):
 		try:
 			info = sync()
-			self.success(f'setup completed')
+			self.success(f'sync completed')
 		except Exception as e:
 			import traceback
 			traceback.print_exc()

@@ -15,7 +15,7 @@ def fetch_and_save_repo_issues(repo, last_updated):
 	uri = 'repos/LiveHealth/livehealthapp/issues'
 	filters = {
 		'page': 1,
-		'state': 'all',
+		'state': 'open',
 		'per_page': 100,
 		'sort': 'created',
 		'direction': 'asc'
@@ -36,7 +36,7 @@ def fetch_and_save_repo_issues(repo, last_updated):
 
 	for issue in issues:
 		is_pull = issue.get('pull_request', None)
-		print(issue.get('title', 'NA'), bool(is_pull))
+		print('Issue', issue.get('title', 'NA'))
 		if is_pull:
 			continue
 

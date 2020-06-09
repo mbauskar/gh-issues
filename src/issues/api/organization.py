@@ -1,5 +1,6 @@
 from issues.models import Organization, Repo
 from issues.utils.request import github_request
+from issues.api.repo import fetch_and_save_organization_repos
 
 def fetch_user_organizations():
 	""" fetch organization from github and save it in db """
