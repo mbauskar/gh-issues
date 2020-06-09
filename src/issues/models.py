@@ -8,6 +8,9 @@ class Organization(BaseModel):
 	name = models.CharField(max_length=255, null=False, primary_key=True)
 	should_track = models.BooleanField(default=False)
 
+	def __str__(self):
+		return self.name
+
 	class Meta:
 		db_table = 'Organization'
 
@@ -15,6 +18,10 @@ class Organization(BaseModel):
 class GitHubUser(AbstractUser, BaseModel):
 	github_username = models.CharField(max_length=255, null=False, unique=True)
 	organizations = models.ManyToManyField(Organization)
+
+	def __str__(self):
+		full_name = '{0} {1}'.format(self.first_name, self.last_name)
+		return self.github_username if not full_name.strip() else full_name
 
 	class Meta:
 		db_table = 'GitHubUser'
@@ -27,6 +34,9 @@ class Repo(BaseModel):
 	organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
 	should_track = models.BooleanField(default=False)
 
+	def __str__(self):
+		return self.name
+
 	class Meta:
 		db_table = 'Repo'
 
@@ -34,6 +44,9 @@ class Repo(BaseModel):
 class Team(BaseModel):
 	name = models.CharField(max_length=255, null=False, primary_key=True)
 	members = models.ManyToManyField(GitHubUser)
+
+	def __str__(self):
+		return self.name
 	
 	class Meta:
 		db_table = 'Team'
@@ -42,6 +55,9 @@ class Team(BaseModel):
 class Label(BaseModel):
 	name = models.CharField(max_length=255, null=False, primary_key=True)
 	color = models.CharField(max_length=255)
+
+	def __str__(self):
+		return self.name
 
 	class Meta:
 		db_table = 'Label'
@@ -62,6 +78,9 @@ class GithubBase(models.Model):
 	gh_updated_at = models.DateTimeField()
 	created_at = models.DateTimeField(auto_now_add=True, null=False)
 	updated_at = models.DateTimeField(auto_now=True, null=False)
+
+	def __str__(self):
+		return '{0}-{1}'.format(self.number, self.state)
 
 	class Meta:
 		abstract = True
